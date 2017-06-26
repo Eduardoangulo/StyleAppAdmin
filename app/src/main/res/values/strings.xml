@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Styleapp Adm</string>
+    <string name="one_fragment">Servicios</string>
+    <string name="two_fragment">Historial</string>
+    <string name="three_fragment">Logros</string>
+</resources>
