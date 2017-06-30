@@ -34,7 +34,6 @@ public class achievements_adapter extends ArrayAdapter<Service> {
         ImageView stars = (ImageView) listItemView.findViewById(R.id.logros_stars);
 
         servicet.setText(currentService.getName());
-        //img.setImageResource(currentService.getImgsrc());
 
         switch(currentService.getId()){
             case 1:img.setImageResource(R.drawable.corte_hippie); break;
