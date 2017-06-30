@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.i(TAG, "Entro MainActivity");
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         conexion= new API_Connection(getApplicationContext(), TAG, URL_desarrollo);
         if(currentWorker ==null){
                 Log.i(TAG, "currentWorker Null");
@@ -53,69 +55,20 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             Log.i(TAG, "currentWorker NO null");
-            conexion.retrofitLoad();
-            if(conexion.getRetrofit()!=null){
-                requestData(conexion.getRetrofit());
-            }
-            else{
-                Toast.makeText(getApplicationContext(), getResources().getString(R.string.connection_error), Toast.LENGTH_SHORT).show();
-            }
+            tabLayout.setupWithViewPager(viewPager);
+            setupViewPager(viewPager);
             toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
         }
 
-
     }
 
-    private void requestData(Retrofit retrofit){
-        styleapp_API service = retrofit.create(styleapp_API.class);
-        Call<ArrayList<DetailService>> Call = service.getWorkerHistory(new WorkerDetailPost(currentWorker.getId()));
-        Call.enqueue(new Callback<ArrayList<DetailService>>() {
-            @Override
-            public void onResponse(Call<ArrayList<DetailService>> call, Response<ArrayList<DetailService>> response) {
-                if(response.isSuccessful()){
-                    Log.i(TAG,"Se obtuvo historial del worker");
-                    detailServices=response.body();
-                    viewPager = (ViewPager) findViewById(R.id.viewpager);
-                    setupViewPager(viewPager);
-
-                    tabLayout = (TabLayout) findViewById(R.id.tabs);
-                    tabLayout.setupWithViewPager(viewPager);
-
-                }
-                else{
-                    Log.e(TAG, "MainAcitity onResponse: "+ response.errorBody());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<DetailService>> call, Throwable t) {
-                Log.e(TAG, "MainAcitity onFailture: "+ t.getMessage());
-            }
-        });
-    }
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        ArrayList<DetailService> servicesDetails=new ArrayList<>();
-        ArrayList<DetailService> historyDetails= new ArrayList<>();
-
-        for(int i=0; i<detailServices.size(); i++){
-           if(detailServices.get(i).getStatus()==2){
-                servicesDetails.add(detailServices.get(i));
-           }
-           else{
-               historyDetails.add(detailServices.get(i));
-           }
-        }
-
-        Fragment svFragment =Services_fragment.newInstance(servicesDetails);
-        Fragment historyFragmentnew= History_fragment.newInstance(historyDetails);
-
-        adapter.addFragment(svFragment, getResources().getString(R.string.servicios));
-        adapter.addFragment(historyFragmentnew, getResources().getString(R.string.historial));
+        adapter.addFragment(new Services_fragment(), getResources().getString(R.string.servicios));
+        adapter.addFragment(new History_fragment(), getResources().getString(R.string.historial));
         adapter.addFragment(new Achievements_fragment(), getResources().getString(R.string.logros));
         viewPager.setAdapter(adapter);
     }

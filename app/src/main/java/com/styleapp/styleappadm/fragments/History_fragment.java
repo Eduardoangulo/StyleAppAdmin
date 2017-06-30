@@ -10,11 +10,20 @@ import android.widget.ListView;
 
 import com.styleapp.styleappadm.R;
 import com.styleapp.styleappadm.classes.DetailServiceAdapter;
+import com.styleapp.styleappadm.connection_service.WorkerDetailPost;
+import com.styleapp.styleappadm.connection_service.styleapp_API;
 import com.styleapp.styleappadm.model.DetailService;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 import static com.styleapp.styleappadm.VariablesGlobales.TAG;
+import static com.styleapp.styleappadm.VariablesGlobales.conexion;
+import static com.styleapp.styleappadm.VariablesGlobales.currentWorker;
 
 
 public class History_fragment extends Fragment{
@@ -23,16 +32,8 @@ public class History_fragment extends Fragment{
         // Required empty public constructor
     }
 
-    private static final String DESCRIBABLE_KEY = "describable_key";
     private ArrayList<DetailService> detailServices;
-
-    public static History_fragment newInstance(ArrayList<DetailService> detailServices) {
-        History_fragment fragment = new History_fragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(DESCRIBABLE_KEY, detailServices);
-        fragment.setArguments(bundle);
-        return fragment;
-    }
+    private DetailServiceAdapter adapter1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,14 +46,43 @@ public class History_fragment extends Fragment{
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.two_fragment, container, false);
         ListView rootView= (ListView) view.findViewById(R.id.list);
-        detailServices = (ArrayList<DetailService>) getArguments().getSerializable(DESCRIBABLE_KEY);
-        for(int i=0; i<detailServices.size(); i++){
-            Log.i(TAG,"servicio: " + detailServices.get(i).getService().getName());
-        }
-        DetailServiceAdapter adapter1=new DetailServiceAdapter(getActivity(), R.layout.instanced_service_list);
-        adapter1.addAll(detailServices);
+
+        adapter1=new DetailServiceAdapter(getActivity(), R.layout.instanced_service_list);
         rootView.setAdapter(adapter1);
+        conexion.retrofitLoad();
+        if (conexion.getRetrofit() != null) {
+            requestData(conexion.getRetrofit());
+        }
+
         return view;
+    }
+    private void requestData(Retrofit retrofit){
+        styleapp_API service = retrofit.create(styleapp_API.class);
+        Call<ArrayList<DetailService>> Call = service.getWorkerHistory(new WorkerDetailPost(currentWorker.getId()));
+        Call.enqueue(new Callback<ArrayList<DetailService>>() {
+            @Override
+            public void onResponse(Call<ArrayList<DetailService>> call, Response<ArrayList<DetailService>> response) {
+                if(response.isSuccessful()){
+                    Log.i(TAG,"Se obtuvo historial_fragment del worker");
+                    ArrayList<DetailService> historyDetails= new ArrayList<>();
+                    detailServices=response.body();
+                    for(int i=0; i<detailServices.size(); i++){
+                        if(detailServices.get(i).getStatus()!=2){
+                            historyDetails.add(detailServices.get(i));
+                        }
+                    }
+                    adapter1.addAll(historyDetails);
+                }
+                else{
+                    Log.e(TAG, "historial_fragment onResponse: "+ response.errorBody());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<DetailService>> call, Throwable t) {
+                Log.e(TAG, "historial_fragment onFailture: "+ t.getMessage());
+            }
+        });
     }
 
 }
