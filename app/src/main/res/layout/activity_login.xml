@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/editTextPassword"
-                android:text="Save Login?"
+                android:text="@string/recordarme"
                 android:layout_marginBottom="2dp"
                 />
 

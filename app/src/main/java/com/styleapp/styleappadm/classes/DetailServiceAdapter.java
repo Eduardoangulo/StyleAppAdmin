@@ -16,14 +16,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.styleapp.styleappadm.R;
+import com.styleapp.styleappadm.model.DetailService;
 
 
  /* Created by Luis on 05/05/2017.
  */
 
-public class Instanced_Service_Adapter extends ArrayAdapter<Instanced_Service> {
+public class DetailServiceAdapter extends ArrayAdapter<DetailService> {
     private int r;
-    public Instanced_Service_Adapter(Activity context, int resource){
+    public DetailServiceAdapter(Activity context, int resource){
         super(context, resource);
         r=resource;
     }
@@ -33,16 +34,16 @@ public class Instanced_Service_Adapter extends ArrayAdapter<Instanced_Service> {
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(r, parent, false);
         }
-        Instanced_Service currentService = getItem(position);
+        DetailService currentDetail = getItem(position);
 
         TextView servicet = (TextView) listItemView.findViewById(R.id.serviceName);
         TextView service_status = (TextView)listItemView.findViewById(R.id.status);
-        ImageView img = (ImageView) listItemView.findViewById(R.id.basicImg);
+        //ImageView img = (ImageView) listItemView.findViewById(R.id.basicImg);
 
 
-        servicet.setText(currentService.getServiceName());
-        service_status.setText(currentService.getState());
-        img.setImageResource(currentService.getImgsrc());
+        servicet.setText(currentDetail.getService().getName());
+        service_status.setText(currentDetail.getStatus().toString());
+        //img.setImageResource(currentDetail.getImgsrc());
 
         return listItemView;
 

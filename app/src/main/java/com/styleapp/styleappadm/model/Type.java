@@ -2,7 +2,6 @@ package com.styleapp.styleappadm.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.styleapp.styleappadm.model.Services;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class Type {
 
     @SerializedName("services")
     @Expose
-    private List<Services> services = null;
+    private List<Service> services = null;
 
     public Integer getType_id() {
         return type_id;
@@ -39,11 +38,11 @@ public class Type {
         this.type_name = type_name;
     }
 
-    public List<Services> getServices() {
+    public List<Service> getServices() {
         return services;
     }
 
-    public void setServices(List<Services> services) {
+    public void setServices(List<Service> services) {
         this.services = services;
     }
 }

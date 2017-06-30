@@ -12,9 +12,9 @@ import com.styleapp.styleappadm.classes.Instanced_Service;
 import com.styleapp.styleappadm.classes.achievements_adapter;
 
 
-public class ThreeFragment extends Fragment{
+public class Achievements_fragment extends Fragment{
 
-    public ThreeFragment() {
+    public Achievements_fragment() {
         // Required empty public constructor
     }
 

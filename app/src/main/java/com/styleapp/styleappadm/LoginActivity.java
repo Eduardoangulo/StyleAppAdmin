@@ -22,7 +22,7 @@ import retrofit2.Response;
 
 import static com.styleapp.styleappadm.VariablesGlobales.TAG;
 import static com.styleapp.styleappadm.VariablesGlobales.conexion;
-import static com.styleapp.styleappadm.VariablesGlobales.currentClient;
+import static com.styleapp.styleappadm.VariablesGlobales.currentWorker;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Log.i(TAG, "Entro LoginActivity");
         regularLogin= (TextView) findViewById(R.id.ingresarLogin);
         login_user= (EditText) findViewById(R.id.loginUser);
         login_password= (EditText) findViewById(R.id.loginPass);
@@ -94,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                         if(response.body().getSuccess()){
                             Log.i(TAG, "Usuario Correcto");
                             Toast.makeText(getApplicationContext(), "Bienvenido a Styleapp", Toast.LENGTH_SHORT).show();
-                            currentClient=response.body().getClient();
+                            currentWorker =response.body().getClient();
                             goMainScreen();
                         }
                         else {
