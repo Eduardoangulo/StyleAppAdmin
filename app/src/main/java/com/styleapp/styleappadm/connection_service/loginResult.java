@@ -13,9 +13,9 @@ public class loginResult {
     @SerializedName("success")
     @Expose
     private Boolean success;
-    @SerializedName("client")
+    @SerializedName("worker")
     @Expose
-    private Client client;
+    private Client worker;
 
     public Boolean getSuccess() {
         return success;
@@ -26,11 +26,11 @@ public class loginResult {
     }
 
    public Client getClient() {
-        return client;
+        return worker;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClient(Client worker) {
+        this.worker = worker;
     }
 
 }

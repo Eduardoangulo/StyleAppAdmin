@@ -12,5 +12,5 @@ public class VariablesGlobales {
     public static String URL_desarrollo = "http://styleapphome.prodequa.com/api/";
     public final static String TAG="STYLEAPPLOGS";
     public static API_Connection conexion;
-    public static Client currentClient;
+    public static Client currentWorker;
 }

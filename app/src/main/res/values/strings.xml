@@ -9,16 +9,14 @@
     <string name="password">contraseña</string>
     <string name="OlvContra"><u>¿No recuerda su contraseña?</u></string>
     <string name="iniciarSesion">ingresar</string>
+    <string name="recordarme">Recordarme</string>
 
 
-    <string name="menu_opcion1">Principal</string>
-    <string name="menu_opcion2">Mi perfil</string>
-    <string name="menu_opcion3">Mis servicios</string>
-    <string name="menu_opcion4">Mis promociones</string>
-    <string name="menu_opcion5">Compartir</string>
-    <string name="menu_opcion6">Ajustes</string>
-    <string name="menu_opcion8">Cerrar sesión</string>
-    <string name="menu_opcion7">Reportar un problema</string>
+
+    <string name="historial">Historial</string>
+    <string name="servicios">Servicios</string>
+    <string name="logros">Logros</string>
+
     <string name="workers">Estilistas</string>
 
     <string name="StyleAppEmail">luisechenique114@gmail.com</string>
@@ -50,11 +48,5 @@
     <string name="hint_cvv">CVV</string>
     <string name="hint_email">Correo electrónico</string>
 
-    <!--Sign up-->
-    <string name="register">registrarse</string>
-    <string name="LastName">apellido</string>
-    <string name="FirstName">nombre</string>
-    <string name="registerSuccess">Registro Exitoso!</string>
-    <string name="registerFail">Email ya registrado!</string>
 
 </resources>
