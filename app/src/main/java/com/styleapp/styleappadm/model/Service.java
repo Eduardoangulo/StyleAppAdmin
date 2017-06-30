@@ -45,6 +45,15 @@ public class Service {
     @Expose
     private Integer service_id;
 
+    @SerializedName("price")
+    @Expose
+    private String price;
+    @SerializedName("value_calc")
+    @Expose
+    private Integer value_calc;
+
+
+
     public Integer getId() {
         return id;
     }
@@ -107,5 +116,21 @@ public class Service {
 
     public void setWorker_id(Integer worker_id) {
         this.worker_id = worker_id;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public Integer getValue_calc() {
+        return value_calc;
+    }
+
+    public void setValue_calc(Integer value_calc) {
+        this.value_calc = value_calc;
     }
 }

@@ -2,7 +2,7 @@ package com.styleapp.styleappadm.connection_service;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.styleapp.styleappadm.model.Client;
+import com.styleapp.styleappadm.model.Worker;
 //import com.styleappteam.styleapp.model.Client;
 
 /**
@@ -15,7 +15,7 @@ public class loginResult {
     private Boolean success;
     @SerializedName("worker")
     @Expose
-    private Client worker;
+    private Worker worker;
 
     public Boolean getSuccess() {
         return success;
@@ -25,11 +25,11 @@ public class loginResult {
         this.success = success;
     }
 
-   public Client getClient() {
+   public Worker getClient() {
         return worker;
     }
 
-    public void setClient(Client worker) {
+    public void setClient(Worker worker) {
         this.worker = worker;
     }
 

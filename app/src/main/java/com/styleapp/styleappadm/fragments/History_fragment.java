@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.styleapp.styleappadm.R;
-import com.styleapp.styleappadm.classes.Instanced_Service;
 import com.styleapp.styleappadm.classes.DetailServiceAdapter;
 import com.styleapp.styleappadm.model.DetailService;
 
