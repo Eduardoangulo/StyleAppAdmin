@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootView2"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:layout_marginRight="2dp"
+    >
+
+    <ImageView
+        android:id="@+id/basicImg"
+        android:layout_height="80dp"
+        android:layout_width="0dp"
+        android:scaleType="fitCenter"
+        android:layout_weight="1"
+        />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:id="@+id/serviceName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingLeft="8dp"
+            android:text="Corte Cabello Mujer"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/logros_stars"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:scaleType="fitStart"
+            android:paddingLeft="8dp"
+            android:src="@drawable/stars"
+            />
+    </LinearLayout>
+
+</LinearLayout>

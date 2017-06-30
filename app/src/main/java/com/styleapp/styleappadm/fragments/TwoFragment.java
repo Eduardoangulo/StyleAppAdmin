@@ -5,8 +5,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.styleapp.styleappadm.R;
+import com.styleapp.styleappadm.classes.Instanced_Service;
+import com.styleapp.styleappadm.classes.Instanced_Service_Adapter;
 
 
 public class TwoFragment extends Fragment{
@@ -24,7 +27,15 @@ public class TwoFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.two_fragment, container, false);
+        View view=inflater.inflate(R.layout.two_fragment, container, false);
+        ListView rootView= (ListView) view.findViewById(R.id.list);
+
+        Instanced_Service_Adapter adapter1=new Instanced_Service_Adapter(getActivity(), R.layout.instanced_service_list);
+        for(int i=0;i<40;i++)
+            adapter1.add(new Instanced_Service("Corte de cabello hombre","Realizado", R.drawable.corte_hombre));
+
+        rootView.setAdapter(adapter1);
+        return view;
     }
 
 }

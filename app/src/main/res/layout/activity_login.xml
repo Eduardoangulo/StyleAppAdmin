@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/salonspa"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:paddingRight="32dp"
+    android:paddingLeft="32dp"
+
+    tools:context="com.styleapp.styleappadm.LoginActivity">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="40dp"
+            android:paddingLeft="48dp"
+            android:paddingRight="48dp"
+            android:paddingBottom="48dp"
+            android:paddingTop="64dp"
+            android:background="@drawable/layout_bg">
+            <TextView
+                android:id="@+id/userLogin"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textSize="16sp"
+                android:text="@string/usuario"
+                android:textAllCaps="true"
+                />
+
+            <EditText
+                android:id="@+id/loginUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:ems="10"
+                android:hint="@string/usuario"
+                android:inputType="textEmailAddress" />
+
+            <TextView
+                android:id="@+id/userPass"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textSize="16sp"
+                android:text="@string/password"
+                android:textAllCaps="true"
+                />
+            <EditText
+                android:id="@+id/loginPass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:textSize="16sp"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:layout_marginBottom="2dp"/>
+
+            <CheckBox
+                android:id="@+id/saveLoginCheckBox"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/editTextPassword"
+                android:text="Save Login?"
+                android:layout_marginBottom="2dp"
+                />
+
+            <TextView
+                android:id="@+id/ingresarLogin"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textSize="16sp"
+                android:text="@string/iniciarSesion"
+                android:background="@color/colorPrimary"
+                android:textStyle="bold"
+                android:textColor="#FFFF"
+                android:gravity="center"
+                android:padding="8dp"
+                android:textAllCaps="true"
+                android:layout_marginBottom="12dp"/>
+
+
+            <!--<TextView-->
+                <!--android:id="@+id/registerLogin"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:textSize="10sp"-->
+                <!--android:text="@string/register"-->
+                <!--android:padding="4dp"-->
+                <!--android:background="@color/colorPrimary"-->
+                <!--android:textStyle="bold"-->
+                <!--android:textColor="#FFFF"-->
+                <!--android:gravity="center"-->
+                <!--android:textAllCaps="true"-->
+                <!--android:layout_marginBottom="4dp"/>-->
+
+            <TextView
+                android:id="@+id/forgotPass"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="@string/OlvContra"
+                />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/haircut_icon" />
+
+    </FrameLayout>
+
+</LinearLayout>
+
+
+

@@ -1,6 +1,60 @@
 <resources>
-    <string name="app_name">Styleapp Adm</string>
-    <string name="one_fragment">Servicios</string>
-    <string name="two_fragment">Historial</string>
-    <string name="three_fragment">Logros</string>
+    <string name="app_name">StyleApp</string>
+    <string name="telf">Teléfono</string>
+    <string name="address">Dirección</string>
+    <string name="city">Distrito</string>
+    <string name="email">E-mail</string>
+    <string name="share">¡Síguenos en nuestras redes sociales!</string>
+    <string name="usuario">usuario</string>
+    <string name="password">contraseña</string>
+    <string name="OlvContra"><u>¿No recuerda su contraseña?</u></string>
+    <string name="iniciarSesion">ingresar</string>
+
+
+    <string name="menu_opcion1">Principal</string>
+    <string name="menu_opcion2">Mi perfil</string>
+    <string name="menu_opcion3">Mis servicios</string>
+    <string name="menu_opcion4">Mis promociones</string>
+    <string name="menu_opcion5">Compartir</string>
+    <string name="menu_opcion6">Ajustes</string>
+    <string name="menu_opcion8">Cerrar sesión</string>
+    <string name="menu_opcion7">Reportar un problema</string>
+    <string name="workers">Estilistas</string>
+
+    <string name="StyleAppEmail">luisechenique114@gmail.com</string>
+    <string name="reportSubjet">Queja StyleApp</string>
+
+    <string name="fragment1_TextView">Opción 1</string>
+    <string name="fragment2_TextView">Opción 2</string>
+    <string name="fragment3_TextView">Opción 3</string>
+    <string name="fragment4_TextView">Opción 4</string>
+    <string name="fragment5_TextView">Opción 5</string>
+    <string name="fragment6_TextView">Opción 6</string>
+
+    <string name="connection_error">Error de conexión</string>
+    <string name="noInternet">No hay conexion a Internet</string>
+    <string name="facebook_app_id">1386848254714675</string>
+
+    <string name="servicio_1">Corte cabello - Mujer</string>
+    <string name="servicio_2">Corte cabello - Hombre</string>
+    <string name="servicio_3">Teñido de cabello</string>
+    <string name="activar_notificaciones">Activar Notificaciones</string>
+    <string name="app_not_found">La aplicación no está instalada</string>
+    <string name="app_settings">Ajustes</string>
+
+    <!--Culqi-->
+    <string name="button_token">Crear Token</string>
+    <string name="hint_card_number">Número de tarjeta</string>
+    <string name="hint_month">Mes</string>
+    <string name="hint_year">Año</string>
+    <string name="hint_cvv">CVV</string>
+    <string name="hint_email">Correo electrónico</string>
+
+    <!--Sign up-->
+    <string name="register">registrarse</string>
+    <string name="LastName">apellido</string>
+    <string name="FirstName">nombre</string>
+    <string name="registerSuccess">Registro Exitoso!</string>
+    <string name="registerFail">Email ya registrado!</string>
+
 </resources>
