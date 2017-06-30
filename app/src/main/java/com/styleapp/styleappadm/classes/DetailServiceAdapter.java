@@ -38,12 +38,28 @@ public class DetailServiceAdapter extends ArrayAdapter<DetailService> {
 
         TextView servicet = (TextView) listItemView.findViewById(R.id.serviceName);
         TextView service_status = (TextView)listItemView.findViewById(R.id.status);
-        //ImageView img = (ImageView) listItemView.findViewById(R.id.basicImg);
+        ImageView img = (ImageView) listItemView.findViewById(R.id.basicImg);
 
 
         servicet.setText(currentDetail.getService().getName());
-        service_status.setText(currentDetail.getStatus().toString());
-        //img.setImageResource(currentDetail.getImgsrc());
+
+        switch (currentDetail.getStatus()){
+            case 0: service_status.setText("Cancelado"); break;
+            case 1: service_status.setText("Realizado"); break;
+            case 2: service_status.setText("En camino"); break;
+            default: service_status.setText(" "); break;
+        }
+
+        switch(currentDetail.getService().getId()){
+            case 1:img.setImageResource(R.drawable.corte_hippie); break;
+            case 2:img.setImageResource(R.drawable.corte_militar); break;
+            case 3:img.setImageResource(R.drawable.corte_escolar); break;
+            case 4:img.setImageResource(R.drawable.pedicure_dama); break;
+            case 5:img.setImageResource(R.drawable.pedicure_caballero); break;
+            case 6:img.setImageResource(R.drawable.manicure_dama); break;
+            case 7:img.setImageResource(R.drawable.manicure_caballero); break;
+            default:img.setImageResource(R.drawable.generictype); break;
+        }
 
         return listItemView;
 
