@@ -99,8 +99,21 @@ public class MainActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        Fragment svFragment =Services_fragment.newInstance(detailServices);
-        Fragment historyFragmentnew= History_fragment.newInstance(detailServices);
+        ArrayList<DetailService> servicesDetails=new ArrayList<>();
+        ArrayList<DetailService> historyDetails= new ArrayList<>();
+
+        for(int i=0; i<detailServices.size(); i++){
+           if(detailServices.get(i).getStatus()==2){
+                servicesDetails.add(detailServices.get(i));
+           }
+           else{
+               historyDetails.add(detailServices.get(i));
+           }
+        }
+
+        Fragment svFragment =Services_fragment.newInstance(servicesDetails);
+        Fragment historyFragmentnew= History_fragment.newInstance(historyDetails);
+
         adapter.addFragment(svFragment, getResources().getString(R.string.servicios));
         adapter.addFragment(historyFragmentnew, getResources().getString(R.string.historial));
         adapter.addFragment(new Achievements_fragment(), getResources().getString(R.string.logros));

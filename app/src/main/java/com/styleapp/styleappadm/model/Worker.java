@@ -1,53 +1,40 @@
+
 package com.styleapp.styleappadm.model;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-/**
- * Created by Luis on 09/06/2017.
- */
-
 public class Worker {
+
     @SerializedName("id")
     @Expose
     private Integer id;
-
     @SerializedName("user_id")
     @Expose
-    private Integer user_id;
-
+    private Integer userId;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
-
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
-
     @SerializedName("types")
     @Expose
-    private List<Type> types = null;
-
+    private List<Type> types;
     @SerializedName("addresses")
     @Expose
     private List<Address> addresses = null;
+    @SerializedName("user")
+    @Expose
+    private User user;
 
-    public Integer getId() {
-        return id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getCreatedAt() {
@@ -66,12 +53,12 @@ public class Worker {
         this.updatedAt = updatedAt;
     }
 
-    public List<Type> getTypes() {
-        return types;
+    public User getUser() {
+        return user;
     }
 
-    public void setTypes(List<Type> types) {
-        this.types = types;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<Address> getAddresses() {
@@ -80,5 +67,21 @@ public class Worker {
 
     public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public List<Type> getTypes() {
+        return types;
+    }
+
+    public void setTypes(List<Type> types) {
+        this.types = types;
     }
 }

@@ -8,8 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.styleapp.styleappadm.R;
-import com.styleapp.styleappadm.classes.Instanced_Service;
 import com.styleapp.styleappadm.classes.achievements_adapter;
+import com.styleapp.styleappadm.model.Service;
+
+import java.util.Collection;
+
+import static com.styleapp.styleappadm.VariablesGlobales.currentWorker;
 
 
 public class Achievements_fragment extends Fragment{
@@ -31,8 +35,7 @@ public class Achievements_fragment extends Fragment{
         ListView rootView= (ListView) view.findViewById(R.id.list);
 
         achievements_adapter adapter1=new achievements_adapter(getActivity(), R.layout.logros_list);
-        for(int i=0;i<40;i++)
-            adapter1.add(new Instanced_Service("Corte de cabello hombre","Realizado", R.drawable.corte_hombre));
+        adapter1.addAll(currentWorker.getTypes().get(0).getServices());
 
         rootView.setAdapter(adapter1);
         return view;
