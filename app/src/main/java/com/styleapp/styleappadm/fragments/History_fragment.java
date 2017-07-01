@@ -1,5 +1,6 @@
 package com.styleapp.styleappadm.fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -37,6 +38,7 @@ public class History_fragment extends Fragment{
     private DetailServiceAdapter adapter1;
     private SwipeRefreshLayout refresh;
     private ArrayList<DetailService> historyDetails= new ArrayList<>();
+    private ProgressDialog progress;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,8 +50,14 @@ public class History_fragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=inflater.inflate(R.layout.two_fragment, container, false);
-        ListView rootView= (ListView) view.findViewById(R.id.list);
 
+        progress = new ProgressDialog(getActivity());
+        progress.setMessage(getResources().getString(R.string.loading));
+        progress.setCancelable(false);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        //progress.show();
+        ListView rootView= (ListView) view.findViewById(R.id.list);
         adapter1=new DetailServiceAdapter(getActivity(), R.layout.instanced_service_list);
         rootView.setAdapter(adapter1);
 
@@ -87,11 +95,13 @@ public class History_fragment extends Fragment{
                     }
                     adapter1.addAll(historyDetails);
                 }
+                progress.hide();
             }
 
             @Override
             public void onFailure(Call<ArrayList<DetailService>> call, Throwable t) {
                 Log.e(TAG, "historial_fragment onFailture: "+ t.getMessage());
+                progress.hide();
             }
         });
     }
@@ -102,11 +112,12 @@ public class History_fragment extends Fragment{
                 iniciarLlamadaServicio();
                 refresh.setRefreshing(false);
             }
-        },1500);
+        },0);
     }
     private void iniciarLlamadaServicio(){
         conexion.retrofitLoad();
         if (conexion.getRetrofit() != null) {
+            progress.show();
             requestData(conexion.getRetrofit());
         }
     }
