@@ -35,6 +35,13 @@ public class achievements_adapter extends ArrayAdapter<Service> {
 
         servicet.setText(currentService.getName());
 
+        if(currentService.getId()==null ){
+            currentService.setId(1);
+        }
+        if(currentService.getValue_calc()==null){
+            currentService.setValue_calc(0);
+        }
+
         switch(currentService.getId()){
             case 1:img.setImageResource(R.drawable.corte_hippie); break;
             case 2:img.setImageResource(R.drawable.corte_militar); break;
@@ -45,13 +52,14 @@ public class achievements_adapter extends ArrayAdapter<Service> {
             case 7:img.setImageResource(R.drawable.manicure_caballero); break;
             default:img.setImageResource(R.drawable.generictype); break;
         }
+
         switch(currentService.getValue_calc()){
             case 1:stars.setImageResource(R.drawable.stars_1); break;
             case 2:stars.setImageResource(R.drawable.stars_2); break;
             case 3:stars.setImageResource(R.drawable.stars_3); break;
             case 4:stars.setImageResource(R.drawable.stars_4); break;
             case 5:stars.setImageResource(R.drawable.stars_5); break;
-            default: break;
+            default:break;
         }
         return listItemView;
 
