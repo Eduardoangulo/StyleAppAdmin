@@ -46,5 +46,6 @@
     <string name="hint_cvv">CVV</string>
     <string name="hint_email">Correo electrónico</string>
 
+    <string name="log_out">Cerrar Sesión</string>
 
 </resources>

@@ -2,6 +2,7 @@ package com.styleapp.styleappadm.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,8 +33,10 @@ public class History_fragment extends Fragment{
         // Required empty public constructor
     }
 
-    private ArrayList<DetailService> detailServices;
+    private ArrayList<DetailService> detailServices=new ArrayList<>();
     private DetailServiceAdapter adapter1;
+    private SwipeRefreshLayout refresh;
+    private ArrayList<DetailService> historyDetails= new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,22 +52,33 @@ public class History_fragment extends Fragment{
 
         adapter1=new DetailServiceAdapter(getActivity(), R.layout.instanced_service_list);
         rootView.setAdapter(adapter1);
-        conexion.retrofitLoad();
-        if (conexion.getRetrofit() != null) {
-            requestData(conexion.getRetrofit());
-        }
+
+        iniciarLlamadaServicio();
+
+        refresh= (SwipeRefreshLayout)view.findViewById(R.id.swiperefresh);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshContent();
+            }
+        });
+        refresh.setColorSchemeColors(getResources().getColor(R.color.colorPrimary));
 
         return view;
     }
     private void requestData(Retrofit retrofit){
+        if(adapter1!=null){
+            adapter1.clear();
+            detailServices.clear();
+            historyDetails.clear();
+        }
         styleapp_API service = retrofit.create(styleapp_API.class);
         Call<ArrayList<DetailService>> Call = service.getWorkerHistory(new WorkerDetailPost(currentWorker.getId()));
         Call.enqueue(new Callback<ArrayList<DetailService>>() {
             @Override
             public void onResponse(Call<ArrayList<DetailService>> call, Response<ArrayList<DetailService>> response) {
                 if(response.isSuccessful()){
-                    Log.i(TAG,"Se obtuvo historial_fragment del worker");
-                    ArrayList<DetailService> historyDetails= new ArrayList<>();
+
                     detailServices=response.body();
                     for(int i=0; i<detailServices.size(); i++){
                         if(detailServices.get(i).getStatus()!=2){
@@ -73,9 +87,6 @@ public class History_fragment extends Fragment{
                     }
                     adapter1.addAll(historyDetails);
                 }
-                else{
-                    Log.e(TAG, "historial_fragment onResponse: "+ response.errorBody());
-                }
             }
 
             @Override
@@ -83,6 +94,21 @@ public class History_fragment extends Fragment{
                 Log.e(TAG, "historial_fragment onFailture: "+ t.getMessage());
             }
         });
+    }
+    private void refreshContent(){
+        new android.os.Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                iniciarLlamadaServicio();
+                refresh.setRefreshing(false);
+            }
+        },1500);
+    }
+    private void iniciarLlamadaServicio(){
+        conexion.retrofitLoad();
+        if (conexion.getRetrofit() != null) {
+            requestData(conexion.getRetrofit());
+        }
     }
 
 }
