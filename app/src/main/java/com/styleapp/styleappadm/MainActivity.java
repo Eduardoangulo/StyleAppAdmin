@@ -1,5 +1,6 @@
 package com.styleapp.styleappadm;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private ArrayList<DetailService> detailServices;
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "Entro MainActivity");
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
+        progress = new ProgressDialog(this);
+        progress.setMessage(getResources().getString(R.string.loading));
+        progress.setCancelable(false);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         conexion= new API_Connection(getApplicationContext(), TAG, URL_desarrollo);
         if(currentWorker ==null){
                 Log.i(TAG, "currentWorker Null");
@@ -122,8 +127,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.cerrar_sesion:
+                progress.show();
                 currentWorker=null;
                 goLoginScreen();
+                progress.hide();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

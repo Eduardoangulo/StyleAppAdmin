@@ -1,4 +1,5 @@
 package com.styleapp.styleappadm;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
     private Boolean saveLogin;
+    private ProgressDialog progress;
 
 
     @Override
@@ -49,6 +51,11 @@ public class LoginActivity extends AppCompatActivity {
         saveLoginCheckBox = (CheckBox)findViewById(R.id.saveLoginCheckBox);
         loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         loginPrefsEditor = loginPreferences.edit();
+        progress = new ProgressDialog(this);
+        progress.setMessage(getResources().getString(R.string.loading));
+        progress.setCancelable(false);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
 
         saveLogin = loginPreferences.getBoolean("saveLogin", false);
         if (saveLogin == true) {
@@ -60,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         regularLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progress.show();
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(login_user.getWindowToken(), 0);
 
@@ -101,20 +109,22 @@ public class LoginActivity extends AppCompatActivity {
                         else {
                             Log.i(TAG, "Usuario Incorrecto");
                             Toast.makeText(getApplicationContext(), "Usuario o Contraseña Incorrectos", Toast.LENGTH_SHORT).show();
-                            //signUp();
                         }
                     }
                     else{
                         Log.e(TAG, " Verificar onResponse: " + response.errorBody());
                     }
+                    progress.hide();
                 }
                 @Override
                 public void onFailure(Call<loginResult> call, Throwable t) {
                     Log.e(TAG, " Verificar onFailure: " + t.getMessage());
+                    progress.hide();
                 }
             });
         }else {
             Log.e(TAG, "Principal: se fue el internet");
+            progress.hide();
         }
     }
 
