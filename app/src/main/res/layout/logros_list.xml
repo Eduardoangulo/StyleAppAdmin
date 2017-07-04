@@ -37,7 +37,6 @@
             android:layout_height="24dp"
             android:scaleType="fitStart"
             android:paddingLeft="8dp"
-            android:src="@drawable/stars_5"
             />
     </LinearLayout>
 
