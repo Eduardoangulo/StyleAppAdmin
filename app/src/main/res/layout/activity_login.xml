@@ -19,11 +19,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_marginTop="40dp"
-            android:paddingLeft="48dp"
-            android:paddingRight="48dp"
-            android:paddingBottom="48dp"
-            android:paddingTop="64dp"
+            android:layout_marginTop="50dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="36dp"
+            android:paddingTop="50dp"
             android:background="@drawable/layout_bg">
             <TextView
                 android:id="@+id/userLogin"
@@ -115,8 +115,9 @@
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
             android:scaleType="fitCenter"
-            android:src="@drawable/haircut_icon" />
+            android:src="@drawable/logo_styleapp" />
 
     </FrameLayout>
 
