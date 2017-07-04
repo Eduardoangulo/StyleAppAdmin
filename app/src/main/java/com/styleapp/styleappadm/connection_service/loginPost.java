@@ -7,10 +7,12 @@ package com.styleapp.styleappadm.connection_service;
 public class loginPost {
     private String email;
     private String password;
+    private String token;
 
-    public loginPost(String email, String password) {
+    public loginPost(String email, String password, String token) {
         this.email = email;
         this.password = password;
+        this.token=token;
     }
 
     public String getEmail() {
@@ -27,5 +29,13 @@ public class loginPost {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

@@ -11,6 +11,7 @@
     <string name="iniciarSesion">ingresar</string>
     <string name="recordarme">Recordarme</string>
     <string name="loading">Cargando</string>
+    <string name="quedesea">¿Que desea Hacer?</string>
 
     <string name="historial">Historial</string>
     <string name="servicios">Servicios</string>
