@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         regularLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progress.show();
+
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(login_user.getWindowToken(), 0);
 
@@ -90,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginApi(String email, String password){
+        progress.show();
         loginPost lPost = new loginPost(email, password);
         conexion.retrofitLoad();
         if(conexion.getRetrofit()!=null){
@@ -114,17 +115,17 @@ public class LoginActivity extends AppCompatActivity {
                     else{
                         Log.e(TAG, " Verificar onResponse: " + response.errorBody());
                     }
-                    progress.hide();
+                    progress.dismiss();
                 }
                 @Override
                 public void onFailure(Call<loginResult> call, Throwable t) {
                     Log.e(TAG, " Verificar onFailure: " + t.getMessage());
-                    progress.hide();
+                    progress.dismiss();
                 }
             });
         }else {
             Log.e(TAG, "Principal: se fue el internet");
-            progress.hide();
+            progress.dismiss();
         }
     }
 
