@@ -95,13 +95,13 @@ public class History_fragment extends Fragment{
                     }
                     adapter1.addAll(historyDetails);
                 }
-                progress.hide();
+                progress.dismiss();
             }
 
             @Override
             public void onFailure(Call<ArrayList<DetailService>> call, Throwable t) {
                 Log.e(TAG, "historial_fragment onFailture: "+ t.getMessage());
-                progress.hide();
+                progress.dismiss();
             }
         });
     }

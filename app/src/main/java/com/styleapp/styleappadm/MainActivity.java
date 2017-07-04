@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.styleapp.styleappadm.connection_service.API_Connection;
 import com.styleapp.styleappadm.connection_service.WorkerDetailPost;
 import com.styleapp.styleappadm.connection_service.styleapp_API;
@@ -42,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +51,8 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "Entro MainActivity");
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
-        progress = new ProgressDialog(this);
-        progress.setMessage(getResources().getString(R.string.loading));
-        progress.setCancelable(false);
-        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         conexion= new API_Connection(getApplicationContext(), TAG, URL_desarrollo);
+        Log.i(TAG,"Token Firebase: "+ FirebaseInstanceId.getInstance().getToken());
         if(currentWorker ==null){
                 Log.i(TAG, "currentWorker Null");
                 finish();
@@ -127,10 +124,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.cerrar_sesion:
-                progress.show();
                 currentWorker=null;
                 goLoginScreen();
-                progress.hide();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
