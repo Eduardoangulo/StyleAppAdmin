@@ -1,6 +1,7 @@
 package com.styleapp.styleappadm.fragments;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
+import com.styleapp.styleappadm.MapActivity;
 import com.styleapp.styleappadm.R;
 import com.styleapp.styleappadm.classes.DetailServiceAdapter;
 import com.styleapp.styleappadm.connection_service.API_Connection;
@@ -84,25 +86,33 @@ public class Services_fragment extends Fragment{
                 }
                 else{
                     currentDetail=historyDetails.get(position);
+
                     conexion.retrofitLoad();
                     if (conexion.getRetrofit() != null) {
-                        ServiceDialog dialog= new ServiceDialog();
-                        dialog.setmListener(new ServiceDialog.ServiceDialogListener() {
+                        switch (currentDetail.getStatus()){
+                            case 2:
+                                startActivity(new Intent(getActivity(), MapActivity.class));
+                                break;
+                            case 3:
+                                ServiceDialog dialog= new ServiceDialog();
+                                dialog.setmListener(new ServiceDialog.ServiceDialogListener() {
 
-                            @Override
-                            public void onDialogPositiveClick(DialogFragment dialog) {
-                                progress.show();
-                                confirmService(conexion.getRetrofit());
-                            }
+                                    @Override
+                                    public void onDialogPositiveClick(DialogFragment dialog) {
+                                        progress.show();
+                                        confirmService(conexion.getRetrofit());
+                                    }
 
-                            @Override
-                            public void onDialogNegativeClick(DialogFragment dialog) {
-                                progress.show();
-                                cancelService(conexion.getRetrofit());
-                            }
-                        });
-                        dialog.show(getFragmentManager() , "StyleApp");
-
+                                    @Override
+                                    public void onDialogNegativeClick(DialogFragment dialog) {
+                                        progress.show();
+                                        cancelService(conexion.getRetrofit());
+                                    }
+                                });
+                                dialog.show(getFragmentManager() , "StyleApp");
+                                break;
+                            default:  break;
+                        }
                     }
                 }
             }

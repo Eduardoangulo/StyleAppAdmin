@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.styleapp.styleappadm.connection_service.API_Connection;
 import com.styleapp.styleappadm.connection_service.loginPost;
 import com.styleapp.styleappadm.connection_service.loginResult;
 import com.styleapp.styleappadm.connection_service.styleapp_API;
@@ -23,8 +24,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.styleapp.styleappadm.VariablesGlobales.TAG;
+import static com.styleapp.styleappadm.VariablesGlobales.URL_desarrollo;
 import static com.styleapp.styleappadm.VariablesGlobales.conexion;
 import static com.styleapp.styleappadm.VariablesGlobales.currentWorker;
+import static com.styleapp.styleappadm.VariablesGlobales.loginPreferences;
+import static com.styleapp.styleappadm.VariablesGlobales.loginPrefsEditor;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -35,8 +39,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText login_password;
 
     private CheckBox saveLoginCheckBox;
-    private SharedPreferences loginPreferences;
-    private SharedPreferences.Editor loginPrefsEditor;
     private Boolean saveLogin;
     private ProgressDialog progress;
 
@@ -59,10 +61,12 @@ public class LoginActivity extends AppCompatActivity {
 
 
         saveLogin = loginPreferences.getBoolean("saveLogin", false);
-        if (saveLogin == true) {
+        if (saveLogin) {
+            progress.show();
             login_user.setText(loginPreferences.getString("username", ""));
             login_password.setText(loginPreferences.getString("password", ""));
             saveLoginCheckBox.setChecked(true);
+            loginApi(login_user.getText().toString(), login_password.getText().toString());
         }
 
         regularLogin.setOnClickListener(new View.OnClickListener() {
@@ -90,9 +94,12 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void loginApi(String email, String password){
+    private void loginApi(final String email, final String pass){
         progress.show();
-        loginPost lPost = new loginPost(email, password, FirebaseInstanceId.getInstance().getToken());
+        loginPost lPost = new loginPost(email, pass, FirebaseInstanceId.getInstance().getToken());
+        if(conexion==null){
+            conexion= new API_Connection(getApplicationContext(), TAG, URL_desarrollo);
+        }
         conexion.retrofitLoad();
         if(conexion.getRetrofit()!=null){
             Log.i(TAG, "Principal: Hay internet");
@@ -106,6 +113,8 @@ public class LoginActivity extends AppCompatActivity {
                             Log.i(TAG, "Usuario Correcto");
                             Toast.makeText(getApplicationContext(), "Bienvenido a Styleapp", Toast.LENGTH_SHORT).show();
                             currentWorker =response.body().getClient();
+                            currentWorker.setLogedUsername(email);
+                            currentWorker.setLogedPassword(pass);
                             goMainScreen();
                         }
                         else {

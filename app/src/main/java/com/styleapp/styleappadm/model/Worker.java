@@ -29,6 +29,9 @@ public class Worker {
     @Expose
     private User user;
 
+    private String logedUsername;
+    private String logedPassword;
+
     public Integer getUserId() {
         return userId;
     }
@@ -83,5 +86,21 @@ public class Worker {
 
     public void setTypes(List<Type> types) {
         this.types = types;
+    }
+
+    public String getLogedUsername() {
+        return logedUsername;
+    }
+
+    public void setLogedUsername(String logedUsername) {
+        this.logedUsername = logedUsername;
+    }
+
+    public String getLogedPassword() {
+        return logedPassword;
+    }
+
+    public void setLogedPassword(String logedPassword) {
+        this.logedPassword = logedPassword;
     }
 }

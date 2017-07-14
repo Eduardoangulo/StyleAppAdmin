@@ -34,16 +34,16 @@ public class ServiceDialog extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder.setView(view)
-                .setMessage("Ingresar Codigo Promocional")
+        builder
+                .setMessage("StyleApp")
                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // FIRE ZE MISSILES!
-                        TextView couponCode=(TextView) view.findViewById(R.id.couponCode);
+                       // TextView couponCode=(TextView) view.findViewById(R.id.couponCode);
                         mListener.onDialogPositiveClick(ServiceDialog.this);
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         mListener.onDialogNegativeClick(ServiceDialog.this);
                     }
