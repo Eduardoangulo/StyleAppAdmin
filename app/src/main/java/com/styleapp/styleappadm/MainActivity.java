@@ -19,10 +19,13 @@ import android.widget.Toast;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.styleapp.styleappadm.connection_service.API_Connection;
 import com.styleapp.styleappadm.connection_service.WorkerDetailPost;
+import com.styleapp.styleappadm.connection_service.loginPost;
+import com.styleapp.styleappadm.connection_service.loginResult;
 import com.styleapp.styleappadm.connection_service.styleapp_API;
 import com.styleapp.styleappadm.fragments.Services_fragment;
 import com.styleapp.styleappadm.fragments.Achievements_fragment;
 import com.styleapp.styleappadm.fragments.History_fragment;
+import com.styleapp.styleappadm.fragments.Types_fragment;
 import com.styleapp.styleappadm.model.DetailService;
 
 import java.util.ArrayList;
@@ -37,18 +40,24 @@ import static com.styleapp.styleappadm.VariablesGlobales.URL_desarrollo;
 import static com.styleapp.styleappadm.VariablesGlobales.conexion;
 import static com.styleapp.styleappadm.VariablesGlobales.TAG;
 import static com.styleapp.styleappadm.VariablesGlobales.currentWorker;
+import static com.styleapp.styleappadm.VariablesGlobales.loginPrefsEditor;
 
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.i(TAG, "Entro MainActivity");
+        progress = new ProgressDialog(this);
+        progress.setMessage(getResources().getString(R.string.loading));
+        progress.setCancelable(false);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         conexion= new API_Connection(getApplicationContext(), TAG, URL_desarrollo);
@@ -71,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
+        adapter.addFragment(new Types_fragment(), getResources().getString(R.string.types));
         adapter.addFragment(new Services_fragment(), getResources().getString(R.string.servicios));
         adapter.addFragment(new History_fragment(), getResources().getString(R.string.historial));
         adapter.addFragment(new Achievements_fragment(), getResources().getString(R.string.logros));
@@ -124,11 +133,68 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.cerrar_sesion:
-                currentWorker=null;
-                goLoginScreen();
+                progress.show();
+                //cleanStack();
+                LogOut();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+    private void cleanStack(){
+        FragmentManager fm = this.getSupportFragmentManager();
+        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
+    }
+    private void LogOut(){
+        loginPrefsEditor.clear();
+        loginPrefsEditor.commit();
+        Log.i(TAG, "User: "+currentWorker.getLogedUsername()+" password: "+currentWorker.getLogedPassword());
+        loginPost lPost = new loginPost(currentWorker.getLogedUsername(), currentWorker.getLogedPassword(), currentWorker.getLogedUsername());
+        if(conexion==null){
+            conexion= new API_Connection(getApplicationContext(), TAG, URL_desarrollo);
+        }
+        conexion.retrofitLoad();
+        if(conexion.getRetrofit()!=null){
+            Log.i(TAG, "Principal: Hay internet");
+            styleapp_API service = conexion.getRetrofit().create(styleapp_API.class);
+            Call<loginResult> Call = service.login(lPost);
+            Call.enqueue(new Callback<loginResult>() {
+                @Override
+                public void onResponse(Call<loginResult> call, Response<loginResult> response) {
+                    if (response.isSuccessful()) {
+
+                        if(response.body().getSuccess()){
+                            Log.i(TAG, "Usuario Correcto");
+                            currentWorker=null;
+                            goLoginScreen();
+                            progress.dismiss();
+                        }
+                        else {
+                            Log.i(TAG, "Datos dañados");
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.connection_error), Toast.LENGTH_LONG).show();
+                            progress.dismiss();
+                        }
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.connection_error), Toast.LENGTH_LONG).show();
+                        Log.e(TAG, " logOut onResponse: " + response.errorBody());
+                        progress.dismiss();
+                    }
+
+                }
+                @Override
+                public void onFailure(Call<loginResult> call, Throwable t) {
+                    Log.e(TAG, " logOut onFailure: " + t.getMessage());
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.connection_error), Toast.LENGTH_LONG).show();
+                    progress.dismiss();
+                }
+            });
+        }else {
+            progress.dismiss();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.connection_error), Toast.LENGTH_LONG).show();
+            Log.e(TAG, "Principal: se fue el internet");
         }
     }
 }

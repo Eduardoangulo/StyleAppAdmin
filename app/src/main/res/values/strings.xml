@@ -9,13 +9,14 @@
     <string name="password">contraseña</string>
     <string name="OlvContra"><u>¿No recuerda su contraseña?</u></string>
     <string name="iniciarSesion">ingresar</string>
-    <string name="recordarme">Recordarme</string>
+    <string name="recordarme">Mantener sesión iniciada</string>
     <string name="loading">Cargando</string>
     <string name="quedesea">¿Que desea Hacer?</string>
 
     <string name="historial">Historial</string>
     <string name="servicios">Servicios</string>
     <string name="logros">Logros</string>
+    <string name="types">Logros</string>
 
     <string name="workers">Estilistas</string>
 
@@ -47,6 +48,22 @@
     <string name="hint_year">Año</string>
     <string name="hint_cvv">CVV</string>
     <string name="hint_email">Correo electrónico</string>
+
+    <string name="selected_place">Último lugar elegido: </string>
+    <string name="google_maps_key">mapskey</string>
+    <string name="place_details">
+    <![CDATA[
+        <b>%1$s</b>
+        <br/>
+        <i>Place Id: %2$s</i>
+        <br/>
+        Address: %3$s
+        <br/>
+        Phone: %4$s
+        <br/>
+        Website: %5$s
+    ]]>
+    </string>
 
     <string name="log_out">Cerrar Sesión</string>
 
