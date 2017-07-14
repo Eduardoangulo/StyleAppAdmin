@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.styleapp.styleappadm.connection_service.loginPost;
 import com.styleapp.styleappadm.connection_service.loginResult;
 import com.styleapp.styleappadm.connection_service.styleapp_API;
@@ -91,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginApi(String email, String password){
         progress.show();
-        loginPost lPost = new loginPost(email, password);
+        loginPost lPost = new loginPost(email, password, FirebaseInstanceId.getInstance().getToken());
         conexion.retrofitLoad();
         if(conexion.getRetrofit()!=null){
             Log.i(TAG, "Principal: Hay internet");

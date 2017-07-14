@@ -1,5 +1,7 @@
 package com.styleapp.styleappadm.connection_service;
 
+import com.styleapp.styleappadm.connection_service.status.StatusPost;
+import com.styleapp.styleappadm.connection_service.status.StatusResponse;
 import com.styleapp.styleappadm.model.DetailService;
 
 import java.util.ArrayList;
@@ -22,5 +24,17 @@ public interface styleapp_API {
     @Headers({ "Content-Type: application/json"})
     @POST("details/worker")
     Call<ArrayList<DetailService>> getWorkerHistory(@Body WorkerDetailPost wdp);
+
+    @Headers({ "Content-Type: application/json"})
+    @POST("details/done")
+    Call<StatusResponse> doneService(@Body StatusPost statusPost);
+
+    @Headers({ "Content-Type: application/json"})
+    @POST("details/canceled")
+    Call<StatusResponse> cancelService(@Body StatusPost statusPost);
+
+    @Headers({ "Content-Type: application/json"})
+    @POST("details/confirm")
+    Call<StatusResponse> confirmarServicio(@Body StatusPost statusPost);
 
 }

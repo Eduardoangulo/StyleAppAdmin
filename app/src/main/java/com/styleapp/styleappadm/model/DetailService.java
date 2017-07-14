@@ -3,6 +3,8 @@ package com.styleapp.styleappadm.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by Luis on 30/06/2017.
  */
@@ -36,6 +38,11 @@ public class DetailService {
     @SerializedName("updated_at")
     @Expose
     private String updatedAt;
+
+    @SerializedName("client")
+    @Expose
+    private List<Client> client;
+
     @SerializedName("service")
     @Expose
     private Service service;
@@ -119,5 +126,13 @@ public class DetailService {
 
     public void setService(Service service) {
         this.service = service;
+    }
+
+    public List<Client> getClient() {
+        return client;
+    }
+
+    public void setClient(List<Client> client) {
+        this.client = client;
     }
 }

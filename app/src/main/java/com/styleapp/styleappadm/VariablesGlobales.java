@@ -13,4 +13,5 @@ public class VariablesGlobales {
     public final static String TAG="STYLEAPPLOGS";
     public static API_Connection conexion;
     public static Worker currentWorker;
+    public final static String keyNoti="keyNoti";
 }
