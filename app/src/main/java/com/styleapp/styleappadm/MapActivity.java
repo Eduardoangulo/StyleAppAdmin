@@ -15,6 +15,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import static com.styleapp.styleappadm.VariablesGlobales.currentDetail;
+
 
 public class MapActivity extends AppCompatActivity implements  OnMapReadyCallback{
 
@@ -43,7 +45,9 @@ public class MapActivity extends AppCompatActivity implements  OnMapReadyCallbac
     @Override
     public void onMapReady(GoogleMap map) {
         mapa = map;
-        mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(-12.0533671, -77.08557689999998), INITIAL_ZOOM_LEVEL));
+        Double latitude=Double.parseDouble(currentDetail.getClient().get(0).getLatitude());
+        Double longitude=Double.parseDouble(currentDetail.getClient().get(0).getLongitude());
+        mapa.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), INITIAL_ZOOM_LEVEL));
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mapa.setMyLocationEnabled(true);
@@ -51,7 +55,7 @@ public class MapActivity extends AppCompatActivity implements  OnMapReadyCallbac
             // Show rationale and request permission.
             Toast.makeText(this, "Necesita habilitar los permisos de su ubicación", Toast.LENGTH_LONG).show();
         }
-        mapa.addMarker(new MarkerOptions().position(new LatLng(-12.0533671, -77.08557689999998)).title("Posición elegida").snippet("StyleApp"));
+        mapa.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title("Posición elegida").snippet("StyleApp"));
     }
 
 }

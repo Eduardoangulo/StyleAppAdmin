@@ -16,7 +16,7 @@
     <string name="historial">Historial</string>
     <string name="servicios">Servicios</string>
     <string name="logros">Logros</string>
-    <string name="types">Logros</string>
+    <string name="types">Disponibilidad</string>
 
     <string name="workers">Estilistas</string>
 
@@ -66,5 +66,7 @@
     </string>
 
     <string name="log_out">Cerrar Sesión</string>
+    <string name="cancel">Cancelar</string>
+    <string name="accept">Aceptar</string>
 
 </resources>
