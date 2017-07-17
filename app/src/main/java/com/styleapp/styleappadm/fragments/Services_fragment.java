@@ -39,6 +39,7 @@ import retrofit2.Retrofit;
 
 import static com.styleapp.styleappadm.VariablesGlobales.TAG;
 import static com.styleapp.styleappadm.VariablesGlobales.conexion;
+import static com.styleapp.styleappadm.VariablesGlobales.currentDetail;
 import static com.styleapp.styleappadm.VariablesGlobales.currentWorker;
 
 
@@ -54,7 +55,7 @@ public class Services_fragment extends Fragment{
     private ArrayList<DetailService> historyDetails= new ArrayList<>();
     private ProgressDialog progress;
     private API_Connection noti;
-    private DetailService currentDetail;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

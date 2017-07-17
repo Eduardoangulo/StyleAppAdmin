@@ -1,12 +1,22 @@
 package com.styleapp.styleappadm;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.TabLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -15,12 +25,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.Manifest;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.styleapp.styleappadm.connection_service.API_Connection;
 import com.styleapp.styleappadm.connection_service.WorkerDetailPost;
 import com.styleapp.styleappadm.connection_service.loginPost;
 import com.styleapp.styleappadm.connection_service.loginResult;
+import com.styleapp.styleappadm.connection_service.position.PositionResponse;
 import com.styleapp.styleappadm.connection_service.styleapp_API;
 import com.styleapp.styleappadm.fragments.Services_fragment;
 import com.styleapp.styleappadm.fragments.Achievements_fragment;
@@ -29,6 +41,7 @@ import com.styleapp.styleappadm.fragments.Types_fragment;
 import com.styleapp.styleappadm.model.DetailService;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,11 +49,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import static com.styleapp.styleappadm.VariablesGlobales.MY_PERMISSIONS_REQUEST_LOCATION;
 import static com.styleapp.styleappadm.VariablesGlobales.URL_desarrollo;
 import static com.styleapp.styleappadm.VariablesGlobales.conexion;
 import static com.styleapp.styleappadm.VariablesGlobales.TAG;
 import static com.styleapp.styleappadm.VariablesGlobales.currentWorker;
 import static com.styleapp.styleappadm.VariablesGlobales.loginPrefsEditor;
+import static com.styleapp.styleappadm.VariablesGlobales.positionPost;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -69,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
             Log.i(TAG, "currentWorker NO null");
+            positionPost.setUserId(currentWorker.getUserId());
             tabLayout.setupWithViewPager(viewPager);
             setupViewPager(viewPager);
             toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -197,4 +213,131 @@ public class MainActivity extends AppCompatActivity {
             Log.e(TAG, "Principal: se fue el internet");
         }
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        //progress.dismiss();
+        Log.i(TAG, "onRequestPermissionsResult");
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                        Log.i(TAG, "Permiso ubicacion autorizado");
+                        requestSingleUpdate(this);
+                    }
+                } else {
+                    Log.i(TAG, "Permiso ubicacion rechazado");
+                    positionPost.setLatitude(-12.054227); //jalar del registro
+                    positionPost.setLongitude(-77.082802);
+                    changePosition();
+                    Toast.makeText(getApplicationContext(),"Se utilizará su ubicación predeterminada",Toast.LENGTH_SHORT).show();
+                }
+            }
+            return;
+        }
+    }
+    public static void requestSingleUpdate(final Context context) {
+        Log.i(TAG, "requestSingleUpdate");
+        final LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        try {
+            int provider=-1;
+            List<String> providers = locationManager.getProviders(true);
+            Location location = null;
+            for (int i=providers.size()-1; i>=0; i--) {
+                Log.i(TAG, "provider "+i+": "+providers.get(i));
+                location = locationManager.getLastKnownLocation(providers.get(i));
+                if (location != null) {
+                    provider=i;
+                    break;
+                }
+            }
+            if(provider!=-1){
+                Log.i(TAG, "provider: "+providers.get(provider));
+            }
+            else{
+                Log.i(TAG, "No hay provider");
+            }
+
+            if(location != null && location.getTime() > Calendar.getInstance().getTimeInMillis() - 2 * 60 * 1000) {
+                Log.i(TAG, "Ultima ubicacion: " + location.getLongitude() + " " + location.getLatitude());
+                positionPost.setLatitude(location.getLatitude());
+                positionPost.setLongitude(location.getLongitude());
+                changePosition();
+            }
+            else {
+                String p;
+                if(provider==-1){
+                    if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+                        p= LocationManager.NETWORK_PROVIDER;
+                    }
+                    else{
+                        //if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+                        p= LocationManager.GPS_PROVIDER;
+                    }
+                }
+                else{
+                    p=providers.get(provider);
+                }
+                Log.i(TAG, "requestLocationUpdates");
+                locationManager.requestLocationUpdates(p, 0, 0, new LocationListener() {
+                    @Override
+                    public void onLocationChanged(Location location) {
+                        Log.i(TAG, "Ubicacion: " + location.getLongitude() + " " + location.getLatitude());
+                        positionPost.setLatitude(location.getLatitude());
+                        positionPost.setLongitude(location.getLongitude());
+                        changePosition();
+                        locationManager.removeUpdates(this);
+                    }
+
+                    @Override
+                    public void onStatusChanged(String provider, int status, Bundle extras) {
+                    }
+
+                    @Override
+                    public void onProviderEnabled(String provider) {
+                    }
+
+                    @Override
+                    public void onProviderDisabled(String provider) {
+                    }
+
+                }, null);
+            }
+        } catch (SecurityException e) {
+            Log.e(TAG, "No tienes permisos de ubicacion");
+        }
+    }
+    public static void changePosition(){
+        conexion.retrofitLoad();
+        if(conexion.getRetrofit()!=null){
+            styleapp_API service = conexion.getRetrofit().create(styleapp_API.class);
+            Call<PositionResponse> call= service.cambiarUbicacion(positionPost);
+            call.enqueue(new Callback<PositionResponse>() {
+                @Override
+                public void onResponse(Call<PositionResponse> call, Response<PositionResponse> response) {
+                    if(response.isSuccessful()){
+                        if(response.body().getSuccess()){
+                            Log.i(TAG, "Se actualizo la ubicación");
+                        }
+                        else{
+                            Log.e(TAG, "API- No se actualizo la ubicación");
+                        }
+
+                    }
+                    else{
+                        Log.e(TAG, "Cambiar Ubicacion onResponse: "+ response.errorBody());
+                    }
+                }
+                @Override
+                public void onFailure(Call<PositionResponse> call, Throwable t) {
+                    Log.e(TAG, "Cambiar Ubicacion onFailture: "+ t.getMessage());
+                }
+            });
+        }
+        else{
+            Log.e(TAG, "Ubicacion Se ufe internet retrofit");
+        }
+    }
+
 }

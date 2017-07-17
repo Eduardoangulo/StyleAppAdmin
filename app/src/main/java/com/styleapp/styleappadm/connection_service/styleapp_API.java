@@ -1,5 +1,7 @@
 package com.styleapp.styleappadm.connection_service;
 
+import com.styleapp.styleappadm.connection_service.position.PositionPost;
+import com.styleapp.styleappadm.connection_service.position.PositionResponse;
 import com.styleapp.styleappadm.connection_service.status.StatusPost;
 import com.styleapp.styleappadm.connection_service.status.StatusResponse;
 import com.styleapp.styleappadm.model.DetailService;
@@ -37,4 +39,7 @@ public interface styleapp_API {
     @POST("details/confirm")
     Call<StatusResponse> confirmarServicio(@Body StatusPost statusPost);
 
+    @Headers({ "Content-Type: application/json"})
+    @POST("users/changePosition")
+    Call<PositionResponse> cambiarUbicacion(@Body PositionPost positionPost);
 }
