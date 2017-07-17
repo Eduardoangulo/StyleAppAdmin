@@ -17,6 +17,9 @@
     <string name="servicios">Servicios</string>
     <string name="logros">Logros</string>
     <string name="types">Disponibilidad</string>
+    <string name="miperfil">Mi Perfil</string>
+
+    <string name="visibilidad">Trabajador Disponible</string>
 
     <string name="workers">Estilistas</string>
 

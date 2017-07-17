@@ -31,6 +31,7 @@ import com.styleapp.styleappadm.connection_service.styleapp_API;
 import com.styleapp.styleappadm.model.DetailService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -143,6 +144,7 @@ public class Services_fragment extends Fragment{
                 progress.dismiss();
                 if(response.isSuccessful()){
                     Toast.makeText(getContext(),"Se cancelo el servicio", Toast.LENGTH_SHORT).show();
+                    refreshContent();
                     enviarNotificacion(currentWorker.getUser().getFirstName()+" rechazó el servicio");
 
                 }
@@ -170,6 +172,7 @@ public class Services_fragment extends Fragment{
                 progress.dismiss();
                 if(response.isSuccessful()){
                     Toast.makeText(getContext(),"Se aceptó el servicio", Toast.LENGTH_SHORT).show();
+                    refreshContent();
                     enviarNotificacion(currentWorker.getUser().getFirstName()+" aceptó el servicio");
                 }
                 else{
@@ -246,6 +249,7 @@ public class Services_fragment extends Fragment{
                             historyDetails.add(detailServices.get(i));
                         }
                     }
+                    Collections.reverse(historyDetails);
                     adapter1.addAll(historyDetails);
                 }
                 progress.dismiss();

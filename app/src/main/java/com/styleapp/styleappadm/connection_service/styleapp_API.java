@@ -1,5 +1,7 @@
 package com.styleapp.styleappadm.connection_service;
 
+import com.styleapp.styleappadm.connection_service.aviability.AvailabilityPost;
+import com.styleapp.styleappadm.connection_service.aviability.AvailabilityResponse;
 import com.styleapp.styleappadm.connection_service.position.PositionPost;
 import com.styleapp.styleappadm.connection_service.position.PositionResponse;
 import com.styleapp.styleappadm.connection_service.status.StatusPost;
@@ -42,4 +44,8 @@ public interface styleapp_API {
     @Headers({ "Content-Type: application/json"})
     @POST("users/changePosition")
     Call<PositionResponse> cambiarUbicacion(@Body PositionPost positionPost);
+
+    @Headers({ "Content-Type: application/json"})
+    @POST("workers/changeStatus")
+    Call<AvailabilityResponse> cambiarEstadoGeneral(@Body AvailabilityPost positionPost);
 }

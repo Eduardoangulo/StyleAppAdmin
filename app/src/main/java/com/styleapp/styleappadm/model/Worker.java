@@ -13,6 +13,9 @@ public class Worker {
     @SerializedName("user_id")
     @Expose
     private Integer userId;
+    @SerializedName("photo")
+    @Expose
+    private String photo;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -31,6 +34,14 @@ public class Worker {
 
     private String logedUsername;
     private String logedPassword;
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
     public Integer getUserId() {
         return userId;

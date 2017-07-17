@@ -31,15 +31,12 @@ public class ServiceDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         final View view= inflater.inflate(R.layout.service_dialog, null);
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        builder
-                .setMessage("StyleApp")
+        builder.setView(view)
+                .setMessage("Aprobar nuevo servicio")
                 .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // FIRE ZE MISSILES!
-                       // TextView couponCode=(TextView) view.findViewById(R.id.couponCode);
                         mListener.onDialogPositiveClick(ServiceDialog.this);
                     }
                 })
