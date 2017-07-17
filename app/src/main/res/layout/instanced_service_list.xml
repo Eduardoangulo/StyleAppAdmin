@@ -41,6 +41,14 @@
             android:text="Realizado"
             android:textAppearance="?android:textAppearanceMedium"
             />
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingLeft="8dp"
+            android:textAppearance="?android:textAppearanceMedium"
+            />
     </LinearLayout>
 
 </LinearLayout>

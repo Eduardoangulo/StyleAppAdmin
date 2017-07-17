@@ -17,6 +17,7 @@ import com.styleapp.styleappadm.connection_service.styleapp_API;
 import com.styleapp.styleappadm.model.DetailService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -89,10 +90,11 @@ public class History_fragment extends Fragment{
 
                     detailServices=response.body();
                     for(int i=0; i<detailServices.size(); i++){
-                        if(detailServices.get(i).getStatus()!=2){
+                        if(detailServices.get(i).getStatus()<2){
                             historyDetails.add(detailServices.get(i));
                         }
                     }
+                    Collections.reverse(historyDetails);
                     adapter1.addAll(historyDetails);
                 }
                 progress.dismiss();

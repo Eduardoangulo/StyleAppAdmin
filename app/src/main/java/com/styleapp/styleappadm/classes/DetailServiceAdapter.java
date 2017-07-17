@@ -38,9 +38,11 @@ public class DetailServiceAdapter extends ArrayAdapter<DetailService> {
 
         TextView servicet = (TextView) listItemView.findViewById(R.id.serviceName);
         TextView service_status = (TextView)listItemView.findViewById(R.id.status);
+        TextView date = (TextView)listItemView.findViewById(R.id.date);
         ImageView img = (ImageView) listItemView.findViewById(R.id.basicImg);
 
-
+        String fecha=currentDetail.getCreatedAt().split(" ")[1]+" "+currentDetail.getCreatedAt().split(" ")[0];
+        date.setText(fecha);
         servicet.setText(currentDetail.getService().getName());
 
         switch (currentDetail.getStatus()){

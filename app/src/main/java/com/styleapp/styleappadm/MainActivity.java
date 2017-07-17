@@ -34,6 +34,7 @@ import com.styleapp.styleappadm.connection_service.loginPost;
 import com.styleapp.styleappadm.connection_service.loginResult;
 import com.styleapp.styleappadm.connection_service.position.PositionResponse;
 import com.styleapp.styleappadm.connection_service.styleapp_API;
+import com.styleapp.styleappadm.fragments.Miperfil;
 import com.styleapp.styleappadm.fragments.Services_fragment;
 import com.styleapp.styleappadm.fragments.Achievements_fragment;
 import com.styleapp.styleappadm.fragments.History_fragment;
@@ -96,7 +97,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Types_fragment(), getResources().getString(R.string.types));
+        adapter.addFragment(new Miperfil(), getResources().getString(R.string.miperfil));
+        //adapter.addFragment(new Types_fragment(), getResources().getString(R.string.types));
         adapter.addFragment(new Services_fragment(), getResources().getString(R.string.servicios));
         adapter.addFragment(new History_fragment(), getResources().getString(R.string.historial));
         adapter.addFragment(new Achievements_fragment(), getResources().getString(R.string.logros));
