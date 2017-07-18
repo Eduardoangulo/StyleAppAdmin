@@ -1,9 +1,16 @@
 package com.styleapp.styleappadm.fragments;
 
+import android.Manifest;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +32,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.styleapp.styleappadm.MainActivity.requestSingleUpdate;
+import static com.styleapp.styleappadm.VariablesGlobales.MY_PERMISSIONS_REQUEST_LOCATION;
+import static com.styleapp.styleappadm.VariablesGlobales.TAG;
 import static com.styleapp.styleappadm.VariablesGlobales.conexion;
 import static com.styleapp.styleappadm.VariablesGlobales.currentWorker;
 
@@ -69,6 +79,15 @@ public class Miperfil extends Fragment {
                     }
                 }
             });
+            conexion.retrofitLoad();
+            if(conexion.getRetrofit()!=null){
+                if(checkLocationPermission()){
+                    requestSingleUpdate(getActivity());
+                }
+            }
+            else{
+                Log.e(TAG, "Principal: se fue el internet");
+            }
         }
         return view;
     }
@@ -121,5 +140,32 @@ public class Miperfil extends Fragment {
         Intent intent= new Intent(getActivity(), LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+    private boolean checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission. ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission. ACCESS_FINE_LOCATION)) {
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Styleapp necesita tu ubicación!")
+                        .setMessage("Activar la ubicacion ayuda a encontrar a los estilistas mas cercanos a ti")
+                        .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ActivityCompat.requestPermissions(getActivity(),
+                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                        MY_PERMISSIONS_REQUEST_LOCATION);
+                            }
+                        })
+                        .create()
+                        .show();
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        }else{
+            return true;
+        }
     }
 }

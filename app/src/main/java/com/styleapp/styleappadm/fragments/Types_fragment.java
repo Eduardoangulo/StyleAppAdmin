@@ -44,43 +44,7 @@ public class Types_fragment extends Fragment {
         adapter1=new Types_adapter(getActivity(), R.layout.types_list);
         rootView.setAdapter(adapter1);
         adapter1.addAll(currentWorker.getTypes());
-
-        conexion.retrofitLoad();
-        if(conexion.getRetrofit()!=null){
-            if(checkLocationPermission()){
-                requestSingleUpdate(getActivity());
-            }
-        }
-        else{
-            Log.e(TAG, "Principal: se fue el internet");
-        }
         return view;
     }
-    private boolean checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission. ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission. ACCESS_FINE_LOCATION)) {
-                new AlertDialog.Builder(getContext())
-                        .setTitle("Styleapp necesita tu ubicación!")
-                        .setMessage("Activar la ubicacion ayuda a encontrar a los estilistas mas cercanos a ti")
-                        .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                ActivityCompat.requestPermissions(getActivity(),
-                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                                        MY_PERMISSIONS_REQUEST_LOCATION);
-                            }
-                        })
-                        .create()
-                        .show();
-            } else {
-                // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
-            }
-            return false;
-        }else{
-            return true;
-        }
-    }
+
 }
