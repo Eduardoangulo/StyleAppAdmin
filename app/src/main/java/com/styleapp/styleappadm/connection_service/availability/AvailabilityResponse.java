@@ -1,4 +1,4 @@
-package com.styleapp.styleappadm.connection_service.aviability;
+package com.styleapp.styleappadm.connection_service.availability;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

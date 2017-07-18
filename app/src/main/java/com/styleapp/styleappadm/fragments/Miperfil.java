@@ -24,8 +24,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.styleapp.styleappadm.LoginActivity;
 import com.styleapp.styleappadm.R;
-import com.styleapp.styleappadm.connection_service.aviability.AvailabilityPost;
-import com.styleapp.styleappadm.connection_service.aviability.AvailabilityResponse;
+import com.styleapp.styleappadm.connection_service.availability.AvailabilityPost;
+import com.styleapp.styleappadm.connection_service.availability.AvailabilityResponse;
 import com.styleapp.styleappadm.connection_service.styleapp_API;
 
 import retrofit2.Call;
