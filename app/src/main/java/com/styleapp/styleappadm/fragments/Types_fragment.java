@@ -1,28 +1,16 @@
 package com.styleapp.styleappadm.fragments;
 
-import android.Manifest;
-import android.content.DialogInterface;
-import android.content.pm.PackageManager;
+
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.styleapp.styleappadm.MainActivity;
 import com.styleapp.styleappadm.R;
 import com.styleapp.styleappadm.classes.Types_adapter;
 
-import static com.styleapp.styleappadm.MainActivity.requestSingleUpdate;
-import static com.styleapp.styleappadm.VariablesGlobales.MY_PERMISSIONS_REQUEST_LOCATION;
-import static com.styleapp.styleappadm.VariablesGlobales.TAG;
-import static com.styleapp.styleappadm.VariablesGlobales.conexion;
 import static com.styleapp.styleappadm.VariablesGlobales.currentWorker;
 
 /**

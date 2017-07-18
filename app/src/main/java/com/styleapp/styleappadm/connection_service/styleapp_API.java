@@ -1,13 +1,15 @@
 package com.styleapp.styleappadm.connection_service;
 
-import com.styleapp.styleappadm.connection_service.aviability.AvailabilityPost;
-import com.styleapp.styleappadm.connection_service.aviability.AvailabilityResponse;
+import com.styleapp.styleappadm.connection_service.availability.AvailabilityPost;
+import com.styleapp.styleappadm.connection_service.availability.AvailabilityResponse;
+import com.styleapp.styleappadm.connection_service.availability.ServiceAvailabilityPost;
 import com.styleapp.styleappadm.connection_service.position.PositionPost;
 import com.styleapp.styleappadm.connection_service.position.PositionResponse;
 import com.styleapp.styleappadm.connection_service.status.StatusPost;
 import com.styleapp.styleappadm.connection_service.status.StatusResponse;
 import com.styleapp.styleappadm.model.DetailService;
 
+import java.security.Provider;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -48,4 +50,8 @@ public interface styleapp_API {
     @Headers({ "Content-Type: application/json"})
     @POST("workers/changeStatus")
     Call<AvailabilityResponse> cambiarEstadoGeneral(@Body AvailabilityPost positionPost);
+
+    @Headers({ "Content-Type: application/json"})
+    @POST("workers/changeServiceStatus")
+    Call<AvailabilityResponse> cambiarEstadoServicio(@Body ServiceAvailabilityPost positionPost);
 }
